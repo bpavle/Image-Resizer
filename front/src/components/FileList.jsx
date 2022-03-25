@@ -9,7 +9,7 @@ const FileList = (props) => {
   return (
     <List>
       {Array.from(files).map((file) => (
-        <ListItem key={files.name}>{file.name}</ListItem>
+        <ListItem key={file.name}>{file.name}</ListItem>
       ))}
     </List>
   );
