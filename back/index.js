@@ -2,7 +2,8 @@ const express = require("express");
 const fs = require("fs");
 const util = require("util");
 const unlinkFile = util.promisify(fs.unlink);
-const { uploadFile, upload } = require("./s3");
+const { uploadFile, upload, deleteFile } = require("./s3");
+const { sendMessageToQueue } = require("./sqs");
 const bodyParser = require("body-parser");
 var path = require("path");
 const app = express();
@@ -16,14 +17,19 @@ app.get("/api/v1/status", async (req, res) => {
 });
 
 app.post("/api/v1/upload-image", upload.single("image"), async (req, res) => {
-  console.log(req.file);
-  const aws_resp = await uploadFile(req.file);
-  console.log("aws:");
-  console.log(aws_resp);
-
-  unlinkFile(req.file.path);
-
-  res.json({ status: "success", data: aws_resp });
+  try {
+    const aws_resp = await uploadFile(req.file);
+    await sendMessageToQueue(req.body.size, aws_resp.key);
+    setTimeout(() => {
+      //TODO: delete image after 5 minutes from s3 bucket
+      //BUG: Access denied
+      deleteFile(data.key);
+    }, 60 * 1000);
+    unlinkFile(req.file.path);
+    res.json({ status: "success", data: aws_resp });
+  } catch (error) {
+    res.json({ status: "error", data: null });
+  }
 });
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {

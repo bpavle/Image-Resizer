@@ -48,8 +48,4 @@ const sendMessageToQueue = (size, key) => {
   return sqs.sendMessage(params).promise();
 };
 
-(async () => {
-  await sendMessageToQueue();
-})();
-
 module.exports = { getQueueUrl, sendMessageToQueue };
