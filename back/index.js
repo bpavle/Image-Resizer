@@ -23,7 +23,7 @@ app.post("/api/v1/upload-image", upload.single("image"), async (req, res) => {
     setTimeout(() => {
       //TODO: delete image after 5 minutes from s3 bucket
       //BUG: Access denied
-      deleteFile(data.key);
+      deleteFile(aws_resp.key);
     }, 60 * 1000);
     unlinkFile(req.file.path);
     res.json({ status: "success", data: aws_resp });
