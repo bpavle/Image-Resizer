@@ -64,4 +64,19 @@ function uploadFile(file) {
   console.log("uploading");
   return s3.upload(uploadParams).promise(); // this will upload file to S3
 }
-module.exports = { uploadFile, upload };
+
+//Delete file from s3
+function deleteFile(fileKey) {
+  //console.log(s3);
+
+  console.log("Deleting file " + fileKey);
+  const params = {
+    Bucket: bucketName,
+    Key: fileKey,
+  };
+  s3.deleteObject(params, function (err, data) {
+    if (err) console.error(err, err.stack);
+    else console.log(data);
+  });
+}
+module.exports = { uploadFile, upload, deleteFile };
