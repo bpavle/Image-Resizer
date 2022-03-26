@@ -2,7 +2,7 @@ import { List, ListItem } from "@mui/material";
 import { FilesContext } from "./Contexts/FilesContext";
 import { useContext } from "react";
 import ResolutionPicker from "./ResolutionPicker";
-
+import styles from "./FileList.module.css";
 const FileList = (props) => {
   let [files, setFiles] = useContext(FilesContext);
 
@@ -12,8 +12,8 @@ const FileList = (props) => {
   return (
     <List>
       {Array.from(files).map((file) => (
-        <ListItem key={file.name}>
-          <div className=""> {file.name}</div>{" "}
+        <ListItem key={file.name} className={styles.listItem}>
+          <div className={styles.form}> {file.name}</div>{" "}
           <div>
             <ResolutionPicker></ResolutionPicker>
           </div>
