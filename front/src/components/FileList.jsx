@@ -1,4 +1,5 @@
 import {
+  Link,
   List,
   ListItem,
   ListItemSecondaryAction,
@@ -16,11 +17,15 @@ const FileList = (props) => {
   if (files === undefined || Array.from(files).length === 0) return null;
   return (
     <List>
-      {Array.from(files).map((file) => (
+      {Array.from(files).map((file, index) => (
         <ListItem key={file.name} className={styles.listItem}>
-          <ListItemText> {file.name}</ListItemText>{" "}
+          <ListItemText>
+            <Link href={URL.createObjectURL(file)} download>
+              {file.name}
+            </Link>
+          </ListItemText>
           <ListItemSecondaryAction>
-            <ResolutionPicker></ResolutionPicker>
+            <ResolutionPicker id={index}></ResolutionPicker>
           </ListItemSecondaryAction>
         </ListItem>
       ))}

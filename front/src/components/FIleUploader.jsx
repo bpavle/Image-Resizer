@@ -14,6 +14,10 @@ const FileUploader = (props) => {
     setFiles(event.target.files);
   };
 
+  const resizeImages = () => {
+    //TODO: Create request to server
+    console.log(files);
+  };
   return (
     <>
       <label
@@ -31,7 +35,9 @@ const FileUploader = (props) => {
           Upload
         </Button>
         {files && files.length > 0 && (
-          <Button variant="contained">Resize</Button>
+          <Button variant="contained" onClick={resizeImages}>
+            Resize
+          </Button>
         )}
       </label>
     </>
