@@ -1,5 +1,6 @@
 const express = require("express");
-const { uploadFile } = require("./s3");
+
+const { uploadFile, upload } = require("./s3");
 const bodyParser = require("body-parser");
 var path = require("path");
 const app = express();
@@ -12,10 +13,10 @@ app.get("/api/v1/status", async (req, res) => {
   res.json({ message: "Hello from server!" });
 });
 
-app.post("/api/v1/upload-image", async (req, res) => {
-  //const resp = await uploadFile("000000.png");
-  console.log(req.body);
-  res.json({ message: "Hello from server!" });
+app.post("/api/v1/upload-image", upload.array("photos"), async (req, res) => {
+  console.log(req.files);
+  uploadFile("000000.png");
+  res.send("Successfully uploaded " + req.files + " files!");
 });
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {
