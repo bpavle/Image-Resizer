@@ -15,31 +15,50 @@ const s3 = new aws.S3({
   secretAccessKey,
 });
 
-var upload = multer({
-  storage: multerS3({
-    s3: s3,
-    bucket: bucketName,
-    //FIXME: acl: "public-read",
-    contentType: multerS3.AUTO_CONTENT_TYPE,
+// This seems like more elegant solution but I am not able to set tag public=yes and therefore cant access image ones in the bucket
+// var upload = multer({
+//   storage: multerS3({
+//     s3: s3,
+//     bucket: bucketName,
+//     //FIXME: acl: "public-read",
+//     contentType: multerS3.AUTO_CONTENT_TYPE,
 
-    metadata: function (req, file, cb) {
-      cb(null, { fieldName: file.fieldname, Tagging: "public=yes" });
-    },
-    key: function (req, file, cb) {
-      cb(null, "000" + Date.now().toString());
-    },
-    Tagging: "public=yes",
-  }),
+//     metadata: function (req, file, cb) {
+//       cb(null, { fieldName: file.fieldname, Tagging: "public=yes" });
+//     },
+//     key: function (req, file, cb) {
+//       cb(null, "000" + Date.now().toString());
+//     },
+//     Tagging: "public=yes",
+//   }),
+// });
+
+var dir = "./public/images";
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir, { recursive: true });
+}
+
+const fileStorageEngine = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, dir);
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
 });
+
+const upload = multer({ storage: fileStorageEngine });
 
 // UPLOAD FILE TO S3
 function uploadFile(file) {
+  const filenameArr = file.filename.split(".");
+  const fileExt = filenameArr[filenameArr.length - 1];
   console.log("Reading file");
-  const fileStream = fs.readFileSync(file);
+  const fileStream = fs.readFileSync(file.path);
   const uploadParams = {
     Bucket: bucketName,
     Body: fileStream,
-    Key: "000" + file,
+    Key: "000" + Date.now().toString() + "." + fileExt,
     Tagging: "public=yes",
   };
   console.log("uploading");
