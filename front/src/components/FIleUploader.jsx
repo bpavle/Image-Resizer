@@ -10,12 +10,16 @@ const FileUploader = (props) => {
   let [files, setFiles] = useContext(FilesContext);
   const selectFile = (event) => {
     console.log(event.target.files);
+    if (event.target.files.length === 0) return;
     setFiles(event.target.files);
   };
 
   return (
     <>
-      <label htmlFor="contained-button-file">
+      <label
+        htmlFor="contained-button-file"
+        style={{ display: "flex", justifyContent: "space-around" }}
+      >
         <Input
           accept="image/*"
           id="contained-button-file"
@@ -26,6 +30,9 @@ const FileUploader = (props) => {
         <Button variant="contained" component="span">
           Upload
         </Button>
+        {files && files.length > 0 && (
+          <Button variant="contained">Resize</Button>
+        )}
       </label>
     </>
   );
