@@ -21,30 +21,31 @@ const FileList = (props) => {
   if (images === undefined || images.length === 0) return null;
   return (
     <List>
-      {images.map((image, index) => (
-        <ListItem key={image.file.name} className={styles.listItem}>
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignContent: "center",
-            }}
-          >
-            <img
-              src={URL.createObjectURL(image.file)}
-              className={styles.image}
-            />
+      {images.map((image, index) => {
+        const imageObj = URL.createObjectURL(image.file);
 
-            <ListItemText>
-              <Link href={URL.createObjectURL(image.file)} download>
-                {image.file.name}
-              </Link>
-            </ListItemText>
-          </Box>
-          <ResolutionPicker id={index}></ResolutionPicker>
-          <ListItemSecondaryAction></ListItemSecondaryAction>
-        </ListItem>
-      ))}
+        return (
+          <ListItem key={image.file.name} className={styles.listItem}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignContent: "center",
+              }}
+            >
+              <img src={imageObj} className={styles.image} />
+
+              <ListItemText>
+                <Link href={imageObj} download>
+                  {image.file.name}
+                </Link>
+              </ListItemText>
+            </Box>
+            <ResolutionPicker id={index}></ResolutionPicker>
+            <ListItemSecondaryAction></ListItemSecondaryAction>
+          </ListItem>
+        );
+      })}
     </List>
   );
 };
