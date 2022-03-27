@@ -28,4 +28,23 @@ const getImageByKey = async (key) => {
   return obj.Body;
 };
 
-module.exports = { getImageByKey };
+const uploadFile = (fileDir, fileName) => {
+  const filenameArr = fileName.split(".");
+  //const fileExt = filenameArr[filenameArr.length - 1];
+  console.log("Reading file");
+  const fileStream = fs.readFileSync(`${fileDir}/${fileName}`);
+  const uploadParams = {
+    Bucket: bucketName,
+    Body: fileStream,
+    Key: fileName,
+    Tagging: "public=yes",
+  };
+  console.log("uploading");
+  return s3.upload(uploadParams).promise(); // this will upload file to S3
+};
+(async () => {
+  console.log(
+    await uploadFile("./public/images", "resized_0001648345625736.png")
+  );
+})();
+module.exports = { getImageByKey, uploadFile };

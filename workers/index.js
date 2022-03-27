@@ -1,5 +1,5 @@
 const { getNextTask } = require("./sqs");
-const { getImageByKey } = require("./s3");
+const { getImageByKey, uploadFile } = require("./s3");
 const { resize } = require("./resize");
 const util = require("util");
 
@@ -19,8 +19,7 @@ const unlinkFile = util.promisify(fs.unlink);
   const [width, height] = size.split("x").map(Number);
   resize(dir, key, width, height);
   unlinkFile(dir + `/${key}`);
+  await uploadFile(dir, key);
 })();
 
-//TODO: Upload back to s3
-
-//TODO: Remove original from s3
+//TODO: Remove original from s3 (this can probably be done by uploading file with same key.)
