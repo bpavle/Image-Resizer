@@ -79,4 +79,17 @@ function deleteFile(fileKey) {
     else console.log(data);
   });
 }
-module.exports = { uploadFile, upload, deleteFile };
+/**
+ * This function checks if object with given key exists in the bucket
+ * @param  {String} key - Key of the file in s3
+ * @returns {Promise} aws response
+ */
+const checkOnObject = (key) => {
+  const params = {
+    Bucket: bucketName,
+    Key: key,
+  };
+  return s3.headObject(params).promise();
+};
+
+module.exports = { uploadFile, upload, deleteFile, checkOnObject };

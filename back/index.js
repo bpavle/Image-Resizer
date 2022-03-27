@@ -2,7 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const util = require("util");
 const unlinkFile = util.promisify(fs.unlink);
-const { uploadFile, upload, deleteFile } = require("./s3");
+const { uploadFile, upload, deleteFile, checkOnObject } = require("./s3");
 const { sendMessageToQueue } = require("./sqs");
 const bodyParser = require("body-parser");
 var path = require("path");
@@ -12,8 +12,17 @@ const port = 9000;
 app.use(bodyParser.json());
 app.use(express.static(path.resolve(__dirname, "../front/build")));
 
-app.get("/api/v1/status", async (req, res) => {
-  res.json({ message: "Hello from server!" });
+//TODO: This could be socket ?
+app.get("/api/v1/status/:key", async (req, res) => {
+  try {
+    const aws_resp = await checkOnObject(req.params.key);
+    // if (aws_resp.code && aws_resp.code == 404)
+    //   throw new Error(`File with key:${key} not found on the bucket`);
+    res.json({ status: "success", data: aws_resp });
+  } catch (error) {
+    console.log("error, no such file");
+    res.json({ status: "error", data: error });
+  }
 });
 
 app.post("/api/v1/upload-image", upload.single("image"), async (req, res) => {
