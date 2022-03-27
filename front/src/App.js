@@ -6,7 +6,14 @@ import { ImagesProvider } from "./components/Contexts/ImagesContext";
 
 function App() {
   return (
-    <Container maxWidth="sm" sx={{ textAlign: "center" }}>
+    <Container
+      maxWidth="xl"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        textAlign: "center",
+      }}
+    >
       <Typography variant="h2">Image Resizer</Typography>
       <ImagesProvider>
         <FileList></FileList>
