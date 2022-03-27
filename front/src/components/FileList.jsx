@@ -13,6 +13,8 @@ import { useContext } from "react";
 import ResolutionPicker from "./ResolutionPicker";
 import styles from "./FileList.module.css";
 import { Box } from "@mui/system";
+import ImageCard from "./ImageCard";
+
 const FileList = (props) => {
   let [images, setImages] = useContext(ImagesContext);
 
@@ -20,33 +22,13 @@ const FileList = (props) => {
 
   if (images === undefined || images.length === 0) return null;
   return (
-    <List>
+    <div className={styles.container}>
       {images.map((image, index) => {
         const imageObj = URL.createObjectURL(image.file);
 
-        return (
-          <ListItem key={image.file.name} className={styles.listItem}>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignContent: "center",
-              }}
-            >
-              <img src={imageObj} className={styles.image} />
-
-              <ListItemText>
-                <Link href={imageObj} download>
-                  {image.file.name}
-                </Link>
-              </ListItemText>
-            </Box>
-            <ResolutionPicker id={index}></ResolutionPicker>
-            <ListItemSecondaryAction></ListItemSecondaryAction>
-          </ListItem>
-        );
+        return <ImageCard image={imageObj} id={index} />;
       })}
-    </List>
+    </div>
   );
 };
 export default FileList;

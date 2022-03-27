@@ -1,10 +1,6 @@
-.listItem {
+.container {
   display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-}
-
-.image {
-  max-width: 200px;
-  align-self: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
