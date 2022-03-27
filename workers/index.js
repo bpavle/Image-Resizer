@@ -18,9 +18,10 @@ const unlinkFile = util.promisify(fs.unlink);
 
   const [width, height] = size.split("x").map(Number);
   resize(dir, key, width, height);
-  unlinkFile(dir + `/${key}`);
   await uploadFile(dir, key);
+  unlinkFile(dir + `/${key}`);
   unlinkFile(dir + `/resized_${key}`);
 })();
 
-//TODO: Remove original from s3 (this can probably be done by uploading file with same key.)
+//TODO: Remove original from s3 (this can probably be done by uploading file with same key as original.)
+//TODO: Run this in interval or similar...
