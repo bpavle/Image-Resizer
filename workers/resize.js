@@ -4,7 +4,7 @@ const fs = require("fs");
 const resize = (fileDir, key, width, height) => {
   console.log("Resizing");
   // input stream
-  let inStream = fs.createReadStream(fileDir);
+  let inStream = fs.createReadStream(`${fileDir}/${key}`);
 
   // output stream
   let outStream = fs.createWriteStream(`${fileDir}/resized_${key}`, {
