@@ -43,9 +43,4 @@ const uploadFile = (fileDir, fileName) => {
   };
   return s3.upload(uploadParams).promise(); // this will upload file to S3
 };
-(async () => {
-  console.log(
-    await uploadFile("./public/images", "resized_0001648345625736.png")
-  );
-})();
 module.exports = { getImageByKey, uploadFile };
