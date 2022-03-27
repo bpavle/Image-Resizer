@@ -13,6 +13,8 @@ function App() {
         flexDirection: "column",
         textAlign: "center",
         marginTop: "10%",
+        marginBottom: "3%",
+        gap: "10px",
       }}
     >
       <Typography variant="h2">Image Resizer</Typography>
