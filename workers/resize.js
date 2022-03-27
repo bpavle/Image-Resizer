@@ -1,13 +1,15 @@
 const sharp = require("sharp");
 const fs = require("fs");
 
-const resize = (filePath, width, height) => {
+const resize = (fileDir, key, width, height) => {
   console.log("Resizing");
   // input stream
-  let inStream = fs.createReadStream(filePath);
+  let inStream = fs.createReadStream(fileDir);
 
   // output stream
-  let outStream = fs.createWriteStream(filePath + "resized", { flags: "w" });
+  let outStream = fs.createWriteStream(`${fileDir}/resized_${key}`, {
+    flags: "w",
+  });
 
   // on error of output file being saved
   outStream.on("error", function () {
