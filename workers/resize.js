@@ -7,35 +7,14 @@ const fs = require("fs");
  * @param  {Number} width - width in pixels
  * @param  {Number} height - height in pixels
  */
-const resize = (fileDir, fileName, width, height) => {
+const resize = async (fileDir, fileName, width, height) => {
   console.log("Resizing");
-  // input stream
-  let inStream = fs.createReadStream(`${fileDir}/${fileName}`);
+  // input file
+  let input = fs.readFileSync(`${fileDir}/${fileName}`);
 
-  // output stream
-  let outStream = fs.createWriteStream(`${fileDir}/resized_${fileName}`, {
-    flags: "w",
-  });
-
-  // on error of output file being saved
-  outStream.on("error", function () {
-    console.log("Error");
-  });
-
-  // on success of output file being saved
-  outStream.on("close", function () {
-    console.log("Successfully saved file");
-  });
-
-  // input stream transformer
-  // "info" event will be emitted on resize
-  let transform = sharp()
+  await sharp(input)
     .resize({ width: width, height: height })
-    .on("info", function (fileInfo) {
-      console.log("Resizing done, file not saved");
-    });
-
-  inStream.pipe(transform).pipe(outStream);
+    .toFile(`${fileDir}/resized_${fileName}`);
 };
 
 module.exports = { resize };

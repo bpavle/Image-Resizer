@@ -17,8 +17,8 @@ const unlinkFile = util.promisify(fs.unlink);
   fs.writeFileSync(dir + `/${key}`, image);
 
   const [width, height] = size.split("x").map(Number);
-  resize(dir, key, width, height);
-  await uploadFile(dir, key);
+  await resize(dir, key, width, height);
+  await uploadFile(dir, `resized_${key}`);
   unlinkFile(dir + `/${key}`);
   unlinkFile(dir + `/resized_${key}`);
 })();
