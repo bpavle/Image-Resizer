@@ -17,7 +17,7 @@ const s3 = new aws.S3({
 /**
  * Get image from s3 and write it to the ./public/images directory
  * @param  {String} key
- * @returns {Promise} Image Object as aws request
+ * @returns {Promise} Image Object
  */
 const getImageByKey = async (key) => {
   const params = {
@@ -25,11 +25,7 @@ const getImageByKey = async (key) => {
     Key: key,
   };
   const obj = await s3.getObject(params).promise();
-  var dir = "./public/images";
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-  fs.writeFileSync(dir + `${key}`, obj.Body);
+  return obj.Body;
 };
 
 module.exports = { getImageByKey };
