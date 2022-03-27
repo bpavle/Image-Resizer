@@ -20,11 +20,6 @@ app.post("/api/v1/upload-image", upload.single("image"), async (req, res) => {
   try {
     const aws_resp = await uploadFile(req.file);
     await sendMessageToQueue(req.body.size, aws_resp.key);
-    setTimeout(() => {
-      //TODO: delete image after 5 minutes from s3 bucket
-      //BUG: Access denied
-      deleteFile(aws_resp.key);
-    }, 60 * 1000);
     unlinkFile(req.file.path);
     res.json({ status: "success", data: aws_resp });
   } catch (error) {
