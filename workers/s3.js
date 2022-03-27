@@ -33,7 +33,7 @@ const getImageByKey = async (key) => {
  * @param  {String} fileName - File name
  * @returns {Promise} Promise aws request
  */
-const uploadFile = (fileDir, fileName) => {
+const uploadFile = async (fileDir, fileName) => {
   const fileStream = fs.readFileSync(`${fileDir}/${fileName}`);
   const uploadParams = {
     Bucket: bucketName,
