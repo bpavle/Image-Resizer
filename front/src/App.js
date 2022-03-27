@@ -12,9 +12,14 @@ function App() {
         display: "flex",
         flexDirection: "column",
         textAlign: "center",
+        marginTop: "10%",
       }}
     >
       <Typography variant="h2">Image Resizer</Typography>
+
+      <Typography variant="body1">
+        Choose your files, adjust resoluton, click <b>upload and resize</b>
+      </Typography>
       <ImagesProvider>
         <FileList></FileList>
         <FileUploader />
