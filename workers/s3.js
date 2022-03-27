@@ -27,11 +27,13 @@ const getImageByKey = async (key) => {
   const obj = await s3.getObject(params).promise();
   return obj.Body;
 };
-
+/**
+ * Function for uploading file to the s3 bucket
+ * @param  {String} fileDir - Absolute directory of a file
+ * @param  {String} fileName - File name
+ * @returns {Promise} Promise aws request
+ */
 const uploadFile = (fileDir, fileName) => {
-  const filenameArr = fileName.split(".");
-  //const fileExt = filenameArr[filenameArr.length - 1];
-  console.log("Reading file");
   const fileStream = fs.readFileSync(`${fileDir}/${fileName}`);
   const uploadParams = {
     Bucket: bucketName,
@@ -39,7 +41,6 @@ const uploadFile = (fileDir, fileName) => {
     Key: fileName,
     Tagging: "public=yes",
   };
-  console.log("uploading");
   return s3.upload(uploadParams).promise(); // this will upload file to S3
 };
 (async () => {

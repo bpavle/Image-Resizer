@@ -1,13 +1,19 @@
 const sharp = require("sharp");
 const fs = require("fs");
-
-const resize = (fileDir, key, width, height) => {
+/**
+ * This function resizes given file in given directory to the given width and height
+ * @param  {String} fileDir - Absolute directory of a file
+ * @param  {String} fileName - File name
+ * @param  {Number} width - width in pixels
+ * @param  {Number} height - height in pixels
+ */
+const resize = (fileDir, fileName, width, height) => {
   console.log("Resizing");
   // input stream
-  let inStream = fs.createReadStream(`${fileDir}/${key}`);
+  let inStream = fs.createReadStream(`${fileDir}/${fileName}`);
 
   // output stream
-  let outStream = fs.createWriteStream(`${fileDir}/resized_${key}`, {
+  let outStream = fs.createWriteStream(`${fileDir}/resized_${fileName}`, {
     flags: "w",
   });
 
