@@ -1,4 +1,10 @@
 .listItem {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
+}
+
+.image {
+  max-width: 200px;
+  align-self: center;
 }
