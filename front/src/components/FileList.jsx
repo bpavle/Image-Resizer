@@ -26,7 +26,7 @@ const FileList = (props) => {
       {images.map((image, index) => {
         const imageObj = URL.createObjectURL(image.file);
 
-        return <ImageCard image={imageObj} id={index} />;
+        return <ImageCard image={imageObj} id={index} key={index} />;
       })}
     </div>
   );
