@@ -1,22 +1,34 @@
 import { Typography, Button } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useContext } from "react";
-import { FilesContext } from "./Contexts/FilesContext";
+import { ImagesContext } from "./Contexts/ImagesContext";
 
 const Input = styled("input")({
   display: "none",
 });
 const FileUploader = (props) => {
-  let [files, setFiles] = useContext(FilesContext);
+  let [images, setImages] = useContext(ImagesContext);
   const selectFile = (event) => {
-    console.log(event.target.files);
+    //let files = [];
+
+    let images = [];
+    console.log({ ...event.target.files });
+
+    for (const [key, value] of Object.entries(event.target.files)) {
+      console.log(key);
+      images.push({ file: value, resolution: "1280 x 720" });
+    }
+    console.log(images);
+    // Array.from(event.target.files).forEach((file) => {
+    //   files.push({ ...file, resolution: "medium" });
+    // });
     if (event.target.files.length === 0) return;
-    setFiles(event.target.files);
+    setImages(images);
   };
 
   const resizeImages = () => {
     //TODO: Create request to server
-    console.log(files);
+    console.log(images);
   };
   return (
     <>
@@ -34,7 +46,7 @@ const FileUploader = (props) => {
         <Button variant="contained" component="span">
           Upload
         </Button>
-        {files && files.length > 0 && (
+        {images && images.length > 0 && (
           <Button variant="contained" onClick={resizeImages}>
             Resize
           </Button>

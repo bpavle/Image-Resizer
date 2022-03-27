@@ -8,21 +8,21 @@ import {
   ListItemSecondaryAction,
   ListItemText,
 } from "@mui/material";
-import { FilesContext } from "./Contexts/FilesContext";
+import { ImagesContext } from "./Contexts/ImagesContext";
 import { useContext } from "react";
 import ResolutionPicker from "./ResolutionPicker";
 import styles from "./FileList.module.css";
 import { Box } from "@mui/system";
 const FileList = (props) => {
-  let [files, setFiles] = useContext(FilesContext);
+  let [images, setImages] = useContext(ImagesContext);
 
-  console.log(files);
+  console.log(images);
 
-  if (files === undefined || Array.from(files).length === 0) return null;
+  if (images === undefined || images.length === 0) return null;
   return (
     <List>
-      {Array.from(files).map((file, index) => (
-        <ListItem key={file.name} className={styles.listItem}>
+      {images.map((image, index) => (
+        <ListItem key={image.file.name} className={styles.listItem}>
           <Box
             sx={{
               display: "flex",
@@ -30,11 +30,14 @@ const FileList = (props) => {
               alignContent: "center",
             }}
           >
-            <img src={URL.createObjectURL(file)} className={styles.image} />
+            <img
+              src={URL.createObjectURL(image.file)}
+              className={styles.image}
+            />
 
             <ListItemText>
-              <Link href={URL.createObjectURL(file)} download>
-                {file.name}
+              <Link href={URL.createObjectURL(image.file)} download>
+                {image.file.name}
               </Link>
             </ListItemText>
           </Box>

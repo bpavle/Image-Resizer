@@ -3,35 +3,39 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
-import { FilesContext } from "./Contexts/FilesContext";
+import { ImagesContext } from "./Contexts/ImagesContext";
 export default function ResolutionPicker(props) {
-  let [files, setFiles] = useContext(FilesContext);
+  let [images, setImages] = useContext(ImagesContext);
   console.log(props.id);
   const setResolution = (event) => {
-    files[props.id].resolution = event.target.value;
-    setFiles(files);
-    console.log(files);
+    images[props.id].resolution = event.target.value;
+    setImages(images);
+    console.log(images);
   };
   return (
     <FormControl>
       <RadioGroup
-        defaultValue={"medium"}
+        defaultValue={"1280 x 720"}
         row
-        aria-labelledby="resolution-picker"
+        aria-label="resolution-picker"
         name="row-radio-buttons-group"
         onChange={setResolution}
       >
         <FormControlLabel
-          value="large"
+          value="1920 x 1080"
           control={<Radio />}
           label="1920 x 1080"
         />
         <FormControlLabel
-          value="medium"
+          value="1280 x 720"
           control={<Radio />}
           label="1280 x 720"
         />
-        <FormControlLabel value="small" control={<Radio />} label="720 x 576" />
+        <FormControlLabel
+          value="720 x 576"
+          control={<Radio />}
+          label="720 x 576"
+        />
       </RadioGroup>
     </FormControl>
   );
