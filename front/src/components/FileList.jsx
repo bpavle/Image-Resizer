@@ -16,7 +16,7 @@ import { Box } from "@mui/system";
 import ImageCard from "./ImageCard";
 
 const FileList = (props) => {
-  let [images, setImages] = useContext(ImagesContext);
+  let [images, setImages] = useContext(ImagesContext).images;
 
   console.log(images);
 
@@ -24,9 +24,7 @@ const FileList = (props) => {
   return (
     <div className={styles.container}>
       {images.map((image, index) => {
-        const imageObj = URL.createObjectURL(image.file);
-
-        return <ImageCard image={imageObj} id={index} key={index} />;
+        return <ImageCard image={image} id={index} key={index} />;
       })}
     </div>
   );
