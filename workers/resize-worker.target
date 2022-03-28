@@ -1,0 +1,34 @@
+[Unit]
+Description=Inside Maps - resizer worker target
+# Start this unit after the sim.service start
+After=network.target
+StartLimitIntervalSec=300
+StartLimitBurst=100
+
+Requires=resize-worker@1.service
+[Service]
+ExecStartPre=/bin/sleep 5
+Restart=always
+
+[Install]
+# This unit should start when sim.service is starting
+WantedBy=multi-user.target
+
+
+__CURSOR[Unit]
+Description=EA SIM - Main SIM process used to connect other services
+After=graphical.target
+# After=network.target
+
+
+[Service]
+# The dummy program will exit
+Type=oneshot
+# Execute a dummy program
+ExecStart=/bin/true
+# This service shall be considered active after start
+RemainAfterExit=yes
+
+[Install]
+# Components of this application should be started at boot time
+WantedBy=multi-user.target
