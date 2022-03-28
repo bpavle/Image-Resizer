@@ -5,8 +5,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import { ImagesContext } from "./Contexts/ImagesContext";
 export default function ResolutionPicker(props) {
-  let [images, setImages] = useContext(ImagesContext);
-  console.log(props.id);
+  let [images, setImages] = useContext(ImagesContext).images;
   const setResolution = (event) => {
     images[props.id].resolution = event.target.value;
     setImages(images);
