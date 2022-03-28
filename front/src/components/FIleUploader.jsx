@@ -43,7 +43,9 @@ const FileUploader = (props) => {
         clearInterval(interval);
         console.log("GET THEM ALL");
         console.log(arr);
+        //window.location.reload(true);
         multiDownload(arr);
+        props.setDisabled(false);
       }
     }, 1000);
 
