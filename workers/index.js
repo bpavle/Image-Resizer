@@ -8,6 +8,7 @@ const unlinkFile = util.promisify(fs.unlink);
 
 (async () => {
   const [key, size] = await getNextTask();
+  console.log(`Key:${key}, size:${size}`);
   const image = await getImageByKey(key);
 
   var dir = `${__dirname}/public/images`;
