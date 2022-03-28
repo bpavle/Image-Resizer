@@ -1,0 +1,17 @@
+[Unit]
+Description=Inside Maps - resizer worker service %i 
+PartOf=resize-worker.target
+After=resize-worker.target
+StartLimitIntervalSec=300
+StartLimitBurst=100
+[Service]
+Type=idle
+ExecStartPre=/bin/sleep 1
+ExecStartPre=bash -c "which node"
+ExecStart=bash -c 'node /home/kum/MyProjects/Image-Resizer/workers/index.js'
+RestartSec=3
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
