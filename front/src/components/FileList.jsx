@@ -18,8 +18,6 @@ import ImageCard from "./ImageCard";
 const FileList = (props) => {
   let [images, setImages] = useContext(ImagesContext).images;
 
-  console.log(images);
-
   if (images === undefined || images.length === 0) return null;
   return (
     <div className={styles.container}>

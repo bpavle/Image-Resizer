@@ -57,7 +57,6 @@ const upload = multer({ storage: fileStorageEngine });
 function uploadFile(file) {
   const filenameArr = file.filename.split(".");
   const fileExt = filenameArr[filenameArr.length - 1];
-  console.log("Reading file");
   const fileStream = fs.readFileSync(file.path);
   const uploadParams = {
     Bucket: bucketName,
@@ -65,7 +64,6 @@ function uploadFile(file) {
     Key: "000" + Date.now().toString() + "." + fileExt,
     Tagging: "public=yes",
   };
-  console.log("uploading");
   return s3.upload(uploadParams).promise(); // this will upload file to S3
 }
 
@@ -75,9 +73,6 @@ function uploadFile(file) {
  * //FIXME: I was unable to delete files from bucket using this one... Access denied!
  */
 function deleteFile(fileKey) {
-  //console.log(s3);
-
-  console.log("Deleting file " + fileKey);
   const params = {
     Bucket: bucketName,
     Key: fileKey,

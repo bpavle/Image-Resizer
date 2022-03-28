@@ -21,10 +21,7 @@ const ImageCard = (props) => {
   const [imageStatus, setImageStatus] = useState(STATUS_CODE.READY_FOR_UPLOAD);
   const imageObj = URL.createObjectURL(props.image.file);
 
-  console.log(`Image ${props.id}: Rendered ImageCard component`);
-  console.log(`Image ${props.id}: Image Status: ${imageStatus}`);
   if (imageStatus === STATUS_CODE.READY_FOR_DOWNLOAD) {
-    console.log(`Image ${props.id}: CLEARING INTERVAL ${interval}`);
     clearInterval(interval);
   }
   return (

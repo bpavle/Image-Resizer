@@ -30,7 +30,6 @@ app.get("/api/v1/status/:key", async (req, res) => {
     //   throw new Error(`File with key:${key} not found on the bucket`);
     res.json({ status: "success", data: aws_resp });
   } catch (error) {
-    console.log("error, no such file");
     res.status(404);
     res.json({ status: "error", data: error });
   }
@@ -49,7 +48,6 @@ app.post(
 
   upload.single("image"),
   (req, res, next) => {
-    console.log("Adding size:", req.file.size);
     totalDataSize += req.file.size;
     next();
   },

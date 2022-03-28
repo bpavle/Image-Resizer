@@ -18,7 +18,6 @@ const FileUploader = (props) => {
     let images = [];
 
     for (const [key, value] of Object.entries(event.target.files)) {
-      console.log(key);
       images.push({
         file: value,
         resolution: "1280 x 720",
@@ -34,8 +33,6 @@ const FileUploader = (props) => {
     let interval = setInterval(() => {
       if (arr.length === images.length) {
         clearInterval(interval);
-        console.log("GET THEM ALL");
-        console.log(arr);
         multiDownload(arr);
         props.setDisabled(false);
       }
@@ -60,15 +57,11 @@ const FileUploader = (props) => {
         )
           .then((response) => response.text())
           .then((result) => {
-            console.log(JSON.parse(result));
-            console.log(JSON.parse(result).data.Location);
             let location = JSON.parse(result).data.Location;
             let key = JSON.parse(result).data.key;
             image.aws_key = key;
             image.resized_location = location.replace(key, "resized_" + key);
-            console.log(image);
             const f = () => {
-              console.log(location);
               fetch(
                 `${process.env.REACT_APP_BACKEND_API}/status/resized_${key}`,
                 {
@@ -79,7 +72,6 @@ const FileUploader = (props) => {
                   return response.text();
                 })
                 .then((result) => {
-                  console.log(result);
                   if (JSON.parse(result).status == "success") {
                     arr.push(image.resized_location);
                     clearInterval(interval);
@@ -91,7 +83,6 @@ const FileUploader = (props) => {
             }, 1000);
           })
           .catch((error) => console.log("error", error));
-        //console.log(image);
         return image;
       })
     );

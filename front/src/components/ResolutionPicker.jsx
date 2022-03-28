@@ -9,7 +9,6 @@ export default function ResolutionPicker(props) {
   const setResolution = (event) => {
     images[props.id].resolution = event.target.value;
     setImages(images);
-    console.log(images);
   };
   return (
     <FormControl>
