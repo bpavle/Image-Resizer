@@ -6,9 +6,10 @@ StartLimitIntervalSec=300
 StartLimitBurst=100
 [Service]
 Type=idle
+EnvironmentFile=WORKER_DIR
 ExecStartPre=/bin/sleep 1
 ExecStartPre=bash -c "which node"
-ExecStart=bash -c 'node /home/kum/MyProjects/Image-Resizer/workers/index.js'
+ExecStart=bash -c 'NODE WORKER'
 RestartSec=3
 Restart=always
 
