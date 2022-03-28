@@ -29,6 +29,7 @@ app.get("/api/v1/status/:key", async (req, res) => {
     res.json({ status: "success", data: aws_resp });
   } catch (error) {
     console.log("error, no such file");
+    res.status(404);
     res.json({ status: "error", data: error });
   }
 });
