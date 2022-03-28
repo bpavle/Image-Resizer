@@ -27,7 +27,8 @@ const getNextTask = async () => {
       return [attributes.Key.StringValue, attributes.Size.StringValue];
     }
   } catch (error) {
-    console.error(error);
+    //console.error(error);
+    return [null, null];
   }
 };
 module.exports = { getNextTask };
