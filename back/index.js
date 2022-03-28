@@ -1,4 +1,5 @@
 const express = require("express");
+require("dotenv").config();
 const fs = require("fs");
 const util = require("util");
 const unlinkFile = util.promisify(fs.unlink);
@@ -6,8 +7,9 @@ const { uploadFile, upload, deleteFile, checkOnObject } = require("./s3");
 const { sendMessageToQueue } = require("./sqs");
 const bodyParser = require("body-parser");
 var path = require("path");
+const { env } = require("process");
 const app = express();
-const port = 9000;
+const port = process.env.PORT || 9000;
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
