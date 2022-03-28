@@ -1,0 +1,7 @@
+const STATUS_CODE = {
+  READY_FOR_UPLOAD: 1,
+  UPLOADING: 2,
+  IN_SQS_QUEUE: 3,
+  READY_FOR_DOWNLOAD: 4,
+};
+export default STATUS_CODE;
