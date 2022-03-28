@@ -1,23 +1,13 @@
-import {
-  Card,
-  CardActions,
-  CardContent,
-  CardMedia,
-  Button,
-  Typography,
-  CircularProgress,
-  Link,
-} from "@mui/material";
+import { Card, CardActions, CardMedia, Link } from "@mui/material";
 
 import ResolutionPicker from "./ResolutionPicker";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { ImagesContext } from "./Contexts/ImagesContext";
 import STATUS_CODE from "../utils/statuses";
 
 let interval;
 const ImageCard = (props) => {
   const [trigger] = useContext(ImagesContext).triggerAll;
-  const [images, setImages] = useContext(ImagesContext).images;
   const [imageStatus, setImageStatus] = useState(STATUS_CODE.READY_FOR_UPLOAD);
   const imageObj = URL.createObjectURL(props.image.file);
 
