@@ -10,7 +10,7 @@ var path = require("path");
 const { env } = require("process");
 const app = express();
 const port = process.env.PORT || 9000;
-
+let totalDataSize = 0;
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
   res.header(
@@ -36,16 +36,34 @@ app.get("/api/v1/status/:key", async (req, res) => {
   }
 });
 
-app.post("/api/v1/upload-image", upload.single("image"), async (req, res) => {
+app.get("/api/v1/stats", async (req, res) => {
   try {
-    const aws_resp = await uploadFile(req.file);
-    await sendMessageToQueue(req.body.size, aws_resp.key);
-    unlinkFile(req.file.path);
-    res.json({ status: "success", data: aws_resp });
+    res.json({ status: "success", data: totalDataSize });
   } catch (error) {
-    res.json({ status: "error", data: null });
+    res.json({ status: "error", data: error });
   }
 });
+
+app.post(
+  "/api/v1/upload-image",
+
+  upload.single("image"),
+  (req, res, next) => {
+    console.log("Adding size:", req.file.size);
+    totalDataSize += req.file.size;
+    next();
+  },
+  async (req, res) => {
+    try {
+      const aws_resp = await uploadFile(req.file);
+      await sendMessageToQueue(req.body.size, aws_resp.key);
+      unlinkFile(req.file.path);
+      res.json({ status: "success", data: aws_resp });
+    } catch (error) {
+      res.json({ status: "error", data: null });
+    }
+  }
+);
 // All other GET requests not handled before will return our React app
 app.get("*", (req, res) => {
   res.sendFile(path.resolve(__dirname, "../front/build", "index.html"));
