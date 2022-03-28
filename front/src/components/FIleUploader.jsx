@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import { useContext } from "react";
 import STATUS_CODE from "../utils/statuses";
 import { ImagesContext } from "./Contexts/ImagesContext";
-import sendRequest from "../utils/try-requests";
+
 import multiDownload from "multi-download";
 
 const Input = styled("input")({
@@ -11,15 +11,11 @@ const Input = styled("input")({
 });
 const FileUploader = (props) => {
   let [images, setImages] = useContext(ImagesContext).images;
-  let [trigger, setTrigger] = useContext(ImagesContext).triggerAll;
 
   let arr = [];
 
   const selectFile = (event) => {
-    //let files = [];
-
     let images = [];
-    //console.log({ ...event.target.files });
 
     for (const [key, value] of Object.entries(event.target.files)) {
       console.log(key);
@@ -29,10 +25,7 @@ const FileUploader = (props) => {
         status: STATUS_CODE.READY_FOR_UPLOAD,
       });
     }
-    //console.log(images);
-    // Array.from(event.target.files).forEach((file) => {
-    //   files.push({ ...file, resolution: "medium" });
-    // });
+
     if (event.target.files.length === 0) return;
     setImages(images);
   };
@@ -43,7 +36,6 @@ const FileUploader = (props) => {
         clearInterval(interval);
         console.log("GET THEM ALL");
         console.log(arr);
-        //window.location.reload(true);
         multiDownload(arr);
         props.setDisabled(false);
       }
@@ -103,26 +95,6 @@ const FileUploader = (props) => {
         return image;
       })
     );
-    // Promise.all(
-    //   images.map((image) => {
-    //     return fetch(
-    //       `${process.env.REACT_APP_BACKEND_API}/status/${image.resized_location}`,
-    //       {
-    //         method: "GET",
-    //       }
-    //     );
-    //   })
-    //   // images.map((image) => {
-    //   //   return sendRequest(image.resized_location);
-    //   // })
-    // )
-    //   .then((results) => {
-    //     console.log(results);
-    //     console.log("ok");
-    //     console.log(images);
-    //     //TODO: Multi download
-    //   })
-    //   .catch((results) => console.error("not ok"));
   };
   return (
     <>
