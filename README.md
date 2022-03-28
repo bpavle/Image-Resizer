@@ -77,3 +77,5 @@ Start worker:
 npm run worker
 ```
 If you want to, you can start multiple workers just by running multiple node processes with above command
+
+Alternatively, you can start workers as systemd linux services in background. Just set up your .env file with node , worker and worker dir paths(see .env.example)
