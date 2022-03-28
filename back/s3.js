@@ -49,7 +49,11 @@ const fileStorageEngine = multer.diskStorage({
 
 const upload = multer({ storage: fileStorageEngine });
 
-// UPLOAD FILE TO S3
+/**
+ * Function for uploading file to s3 bucket
+ * @param  {File} file multer file from req obj
+ * @returns {Promise}
+ */
 function uploadFile(file) {
   const filenameArr = file.filename.split(".");
   const fileExt = filenameArr[filenameArr.length - 1];
@@ -65,7 +69,11 @@ function uploadFile(file) {
   return s3.upload(uploadParams).promise(); // this will upload file to S3
 }
 
-//Delete file from s3
+/**
+ * Function for deleting file from s3 bucket
+ * @param  {String} fileKey key of the object that needs to be deleted from the bucket
+ * //FIXME: I was unable to delete files from bucket using this one... Access denied!
+ */
 function deleteFile(fileKey) {
   //console.log(s3);
 
