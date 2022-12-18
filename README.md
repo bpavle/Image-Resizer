@@ -10,6 +10,10 @@ Pavle Bradic
 1. Node >= 14
 2. Npm >= 6
 
+## Arhitecture
+
+<img src="./architecture.png" alt="Architecture"/>
+
 ## Project Structure
 
 Project is split into `/front`, `/back` and `/workers` directories. Each part keeps its specific set of dependencies and can be run as separate npm package.
