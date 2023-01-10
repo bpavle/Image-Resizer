@@ -8,7 +8,7 @@ const { exit } = require("process");
 const unlinkFile = util.promisify(fs.unlink);
 
 (async () => {
-  var dir = `${__dirname}/public/images`;
+  const dir = `${__dirname}/public/images`;
   try {
     const [key, size] = await getNextTask();
     console.log(`Key:${key}, size:${size}`);

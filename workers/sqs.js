@@ -14,7 +14,7 @@ const sqsSuccessUrl = process.env.AWS_SUCCESS_QUEUE_URL;
 const getNextTask = async () => {
   try {
     const sqs = new aws.SQS({ region, accessKeyId, secretAccessKey });
-    var params = {
+    const params = {
       MaxNumberOfMessages: 1,
       MessageAttributeNames: ["All"],
       QueueUrl: sqsSuccessUrl,

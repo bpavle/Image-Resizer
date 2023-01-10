@@ -1,6 +1,6 @@
 require("dotenv").config();
-var multer = require("multer");
-var multerS3 = require("multer-s3");
+const multer = require("multer");
+const multerS3 = require("multer-s3");
 const aws = require("aws-sdk");
 const fs = require("fs");
 
@@ -33,7 +33,7 @@ const s3 = new aws.S3({
 //   }),
 // });
 
-var dir = "./public/images";
+const dir = "./public/images";
 if (!fs.existsSync(dir)) {
   fs.mkdirSync(dir, { recursive: true });
 }
@@ -54,7 +54,7 @@ const upload = multer({ storage: fileStorageEngine });
  * @param  {File} file multer file from req obj
  * @returns {Promise}
  */
-function uploadFile(file) {
+const uploadFile = (file) => {
   const filenameArr = file.filename.split(".");
   const fileExt = filenameArr[filenameArr.length - 1];
   const fileStream = fs.readFileSync(file.path);
@@ -65,14 +65,14 @@ function uploadFile(file) {
     Tagging: "public=yes",
   };
   return s3.upload(uploadParams).promise(); // this will upload file to S3
-}
+};
 
 /**
  * Function for deleting file from s3 bucket
  * @param  {String} fileKey key of the object that needs to be deleted from the bucket
  * //FIXME: I was unable to delete files from bucket using this one... Access denied!
  */
-function deleteFile(fileKey) {
+const deleteFile = (fileKey) => {
   const params = {
     Bucket: bucketName,
     Key: fileKey,
@@ -81,7 +81,7 @@ function deleteFile(fileKey) {
     if (err) console.error(err, err.stack);
     else console.log(data);
   });
-}
+};
 /**
  * This function checks if object with given key exists in the bucket
  * @param  {String} key - Key of the file in s3
